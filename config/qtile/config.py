@@ -418,8 +418,8 @@ def get_gpu_memory():
 
 
 layout_theme = {
-    "border_width": 1,
-    "margin": 1,
+    "border_width": 2,
+    "margin": 2,
     "border_focus": colors[6],
     "border_normal": colors[0],
 }
