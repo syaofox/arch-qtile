@@ -347,6 +347,7 @@ screens = [
                     margin = 6,
                     scale = True,
                     # /home/syaofox/.local/bin/rofi-power-menu
+                    # /usr/.local/bin/rofi-power-menu
                     mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("rofi -show power-menu -modi 'power-menu:rofi-power-menu'")},
                 ),
                 widget.Prompt(
@@ -560,6 +561,9 @@ def autostart():
     os.environ["GTK_IM_MODULE"] = "fcitx"
     os.environ["QT_IM_MODULE"] = "fcitx"
     os.environ["XMODIFIERS"] = "@im=fcitx"
+
+    # 添加 ~/.local/bin 到 PATH
+    os.environ['PATH'] = f"{os.path.expanduser('~')}/.local/bin:{os.environ.get('PATH', '')}"
 
     start_gnome_keyring()
 

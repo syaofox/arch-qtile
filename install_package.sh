@@ -13,9 +13,12 @@ PACKAGES=(
     # --- 核心系统/开发/微码 ---
     intel-ucode        # Intel CPU 微码 (如果是 AMD 请替换为 amd-ucode)
     base-devel         # 编译环境核心工具 (包含 gcc, make 等)
+    xorg-xrandr       # 显示器管理工具
     git                # Git 版本控制
+    neovim             # 文本编辑器
     nodejs             # JavaScript 运行时
     ripgrep            # 快速代码搜索工具
+    python-psutil      # Python 进程监控工具
 
     # --- 基础工具/效率/系统管理 ---
     alacritty          # 终端模拟器
@@ -34,6 +37,7 @@ PACKAGES=(
     maim               # 截图工具
     rofi               # 应用程序启动器/窗口切换器
     # gvfs               # 虚拟文件系统
+    pavucontrol        # 音量控制
    
     # --- 字体 ---
     ttf-jetbrains-mono-nerd # JetBrains Mono Nerd 字体
