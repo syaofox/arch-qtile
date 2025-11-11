@@ -45,6 +45,34 @@ def columns_shrink_current(qtile):
     layout.group.layout_all()
 
 
+def switch_group_cycle(qtile, direction: int):
+    groups = [
+        group
+        for group in qtile.groups
+        if group.name != "scratchpad" and group.windows
+    ]
+    if not groups:
+        return
+
+    current_group = qtile.current_group
+
+    if current_group in groups:
+        index = groups.index(current_group)
+        next_group = groups[(index + direction) % len(groups)]
+    else:
+        next_group = groups[0 if direction > 0 else -1]
+
+    qtile.current_screen.set_group(next_group)
+
+
+def switch_group_next(qtile):
+    switch_group_cycle(qtile, direction=1)
+
+
+def switch_group_prev(qtile):
+    switch_group_cycle(qtile, direction=-1)
+
+
 keys = [
     Key([mod], "h", lazy.layout.left(), desc="移动焦点到左边"),
     Key([mod], "l", lazy.layout.right(), desc="移动焦点到右边"),
@@ -85,8 +113,9 @@ keys = [
         lazy.spawn("bash -c 'export LANGUAGE=zh_CN.UTF-8 && brave-browser &'"),
         desc="启动浏览器",
     ),
-    # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="切换布局"),
+    # 在不同组之间循环切换
+    Key([mod], "Tab", lazy.function(switch_group_next), desc="在组之间向前切换"),
+    Key([mod, "shift"], "Tab", lazy.function(switch_group_prev), desc="在组之间向后切换"),
     Key([mod], "q", lazy.window.kill(), desc="关闭焦点窗口"),
     Key(
         [mod],
