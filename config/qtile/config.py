@@ -492,16 +492,16 @@ screens = [
                 ),
                 widget.WindowName(foreground=colors[6], padding=8, max_chars=40),
                 # make_sep(),
-                widget.Net(
-                    foreground=colors[5],
-                    padding=8,
-                    format="Net: ↓{down:.1f}{down_suffix}/s ↑{up:.1f}{up_suffix}/s",
-                    update_interval=1,
-                    use_bits=False,
-                    mouse_callbacks={
-                        "Button1": lambda: qtile.cmd_spawn(myTerm + " -e btop")
-                    },
-                ),
+                # widget.Net(
+                #     foreground=colors[5],
+                #     padding=8,
+                #     format="Net: ↓{down:.1f}{down_suffix}/s ↑{up:.1f}{up_suffix}/s",
+                #     update_interval=1,
+                #     use_bits=False,
+                #     mouse_callbacks={
+                #         "Button1": lambda: qtile.cmd_spawn(myTerm + " -e btop")
+                #     },
+                # ),
                 # widget.GenPollText(
                 #     update_interval = 300,
                 #     func = get_kernel_version,
@@ -509,65 +509,65 @@ screens = [
                 #     padding = 8,
                 #     fmt = '{}',
                 # ),
-                make_sep(),
-                # uv tool install qtile --with psutil
-                widget.CPU(
-                    foreground=colors[4],
-                    padding=8,
-                    mouse_callbacks={
-                        "Button1": lambda: qtile.cmd_spawn(myTerm + " -e btop")
-                    },
-                    format="CPU: {load_percent}%",
-                ),
-                make_sep(),
-                widget.Memory(
-                    foreground=colors[8],
-                    padding=8,
-                    mouse_callbacks={
-                        "Button1": lambda: qtile.cmd_spawn(myTerm + " -e btop")
-                    },
-                    measure_mem="G",
-                    format="Mem: {MemUsed:.2f}{mm}",
-                ),
-                make_sep(),
-                widget.GenPollText(
-                    update_interval=5,
-                    func=get_gpu_usage,
-                    foreground=colors[3],
-                    padding=8,
-                    fmt="{}",
-                ),
-                make_sep(),
-                widget.GenPollText(
-                    update_interval=5,
-                    func=get_gpu_memory,
-                    foreground=colors[6],
-                    padding=8,
-                    fmt="{}",
-                ),
-                make_sep(),
-                widget.DF(
-                    update_interval=60,
-                    foreground=colors[5],
-                    padding=8,
-                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("thunar")},
-                    partition="/",
-                    # format = '[{p}] {uf}{m} ({r:.0f}%)',
-                    format="{uf}{m} free",
-                    fmt="Disk: {}",
-                    visible_on_warn=False,
-                ),
-                make_sep(),
-                widget.DF(
-                    update_interval=60,
-                    foreground=colors[7],
-                    padding=8,
-                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("thunar")},
-                    partition="/mnt/data",
-                    format="{uf}{m} free",
-                    fmt="Data: {}",
-                    visible_on_warn=False,
-                ),
+                # make_sep(),
+                # # uv tool install qtile --with psutil
+                # widget.CPU(
+                #     foreground=colors[4],
+                #     padding=8,
+                #     mouse_callbacks={
+                #         "Button1": lambda: qtile.cmd_spawn(myTerm + " -e btop")
+                #     },
+                #     format="CPU: {load_percent}%",
+                # ),
+                # make_sep(),
+                # widget.Memory(
+                #     foreground=colors[8],
+                #     padding=8,
+                #     mouse_callbacks={
+                #         "Button1": lambda: qtile.cmd_spawn(myTerm + " -e btop")
+                #     },
+                #     measure_mem="G",
+                #     format="Mem: {MemUsed:.2f}{mm}",
+                # ),
+                # make_sep(),
+                # widget.GenPollText(
+                #     update_interval=5,
+                #     func=get_gpu_usage,
+                #     foreground=colors[3],
+                #     padding=8,
+                #     fmt="{}",
+                # ),
+                # make_sep(),
+                # widget.GenPollText(
+                #     update_interval=5,
+                #     func=get_gpu_memory,
+                #     foreground=colors[6],
+                #     padding=8,
+                #     fmt="{}",
+                # ),
+                # make_sep(),
+                # widget.DF(
+                #     update_interval=60,
+                #     foreground=colors[5],
+                #     padding=8,
+                #     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("thunar")},
+                #     partition="/",
+                #     # format = '[{p}] {uf}{m} ({r:.0f}%)',
+                #     format="{uf}{m} free",
+                #     fmt="Disk: {}",
+                #     visible_on_warn=False,
+                # ),
+                # make_sep(),
+                # widget.DF(
+                #     update_interval=60,
+                #     foreground=colors[7],
+                #     padding=8,
+                #     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("thunar")},
+                #     partition="/mnt/data",
+                #     format="{uf}{m} free",
+                #     fmt="Data: {}",
+                #     visible_on_warn=False,
+                # ),
                 # sep,
                 # widget.Battery(
                 #     foreground=colors[6],           # pick a palette slot you like
@@ -594,7 +594,7 @@ screens = [
                 widget.Clock(
                     foreground=colors[8],
                     padding=8,
-                    # mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-date')},
+                    mouse_callbacks = {"Button1": lambda: qtile.cmd_spawn(myTerm + " -e btop")},
                     format="%m-%d %H:%M",
                 ),
                 systray_widget(),
