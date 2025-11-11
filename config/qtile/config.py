@@ -73,6 +73,46 @@ def switch_group_prev(qtile):
     switch_group_cycle(qtile, direction=-1)
 
 
+def swap_window_with_next(qtile):
+    group = qtile.current_group
+    layout = qtile.current_layout
+    current = group.current_window if group else None
+    if not group or not layout or not current:
+        return
+
+    handled = False
+    layout_name = getattr(layout, "name", "")
+
+    if layout_name == "columns":
+        column = getattr(layout, "cc", None)
+        if column and len(column) > 1 and column.current_index + 1 < len(column):
+            layout.shuffle_down()
+            handled = True
+        elif getattr(layout, "columns", None) and len(layout.columns) > 1:
+            layout.swap_column_right()
+            handled = True
+        elif column and column.current_index > 0:
+            layout.shuffle_up()
+            handled = True
+    elif layout_name == "monadtall":
+        if hasattr(layout, "swap_main"):
+            layout.swap_main()
+            handled = True
+        elif hasattr(layout, "shuffle_down"):
+            layout.shuffle_down()
+            handled = True
+    else:
+        for command in ("shuffle_down", "swap_right", "swap_main"):
+            method = getattr(layout, command, None)
+            if callable(method):
+                method()
+                handled = True
+                break
+
+    if handled:
+        group.focus(current, warp=False)
+
+
 keys = [
     Key([mod], "h", lazy.layout.left(), desc="移动焦点到左边"),
     Key([mod], "l", lazy.layout.right(), desc="移动焦点到右边"),
@@ -116,6 +156,7 @@ keys = [
     # 在不同组之间循环切换
     Key([mod], "Tab", lazy.function(switch_group_next), desc="在组之间向前切换"),
     Key([mod, "shift"], "Tab", lazy.function(switch_group_prev), desc="在组之间向后切换"),
+    Key([mod], "grave", lazy.function(swap_window_with_next), desc="与下一个窗口对调位置"),
     Key([mod], "q", lazy.window.kill(), desc="关闭焦点窗口"),
     Key(
         [mod],
