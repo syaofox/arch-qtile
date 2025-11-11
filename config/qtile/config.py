@@ -211,21 +211,15 @@ for vt in range(1, 8):
 
 
 group_definitions = [
-    ("1", {"label": ""}),
+    ("1", {"label": ""}),
     ("2", {"label": "", "matches": [Match(wm_class="brave-browser")]}),
-    ("3", {"label": "", "matches": [Match(wm_class="cursor")]}),
+    ("3", {"label": "", "matches": [Match(wm_class="cursor")]}),
     ("4", {}),
     ("5", {}),
     ("6", {}),
     ("7", {}),
     ("8", {}),
-    (
-        "9",
-        {
-            "label": "",
-            "matches": [Match(wm_class="io.github.celluloid_player.Celluloid")],
-        },
-    ),
+    ("9", {}),
 ]
 
 groups = [Group(name, **params) for name, params in group_definitions]
@@ -462,18 +456,7 @@ screens = [
         top=bar.Bar(
             widgets=[
                 widget.Spacer(length=8),
-                widget.Image(
-                    filename="~/.config/qtile/icons/syaofox.png",
-                    margin=6,
-                    scale=True,
-                    # /home/syaofox/.local/bin/rofi-power-menu
-                    # /usr/.local/bin/rofi-power-menu
-                    mouse_callbacks={
-                        "Button1": lambda: qtile.cmd_spawn(
-                            "rofi -show power-menu -modi 'power-menu:rofi-power-menu'"
-                        )
-                    },
-                ),
+                
                 widget.Prompt(font="Ubuntu Mono", fontsize=14, foreground=colors[1]),
                 widget.GroupBox(
                     fontsize=16,
@@ -616,6 +599,18 @@ screens = [
                 ),
                 systray_widget(),
                 widget.Spacer(length=8),
+                widget.Image(
+                    filename="~/.config/qtile/icons/syaofox.png",
+                    margin=6,
+                    scale=True,
+                    # /home/syaofox/.local/bin/rofi-power-menu
+                    # /usr/.local/bin/rofi-power-menu
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(
+                            "rofi -show power-menu -modi 'power-menu:rofi-power-menu'"
+                        )
+                    },
+                ),
             ],
             # 24,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
@@ -658,6 +653,7 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
+        Match(wm_class="io.github.celluloid_player.Celluloid"),  # Celluloid player
     ]
 )
 auto_fullscreen = True
