@@ -100,6 +100,8 @@ keys = [
         lazy.spawn('sh -c "maim -s | xclip -selection clipboard -t image/png -i"'),
         desc="截图"
     ),
+    Key([mod], "p", lazy.spawn("sh -c 'gpick -p'"), desc="选择颜色并复制到剪贴板"),
+
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -117,15 +119,15 @@ for vt in range(1, 8):
 
 
 group_definitions = [
-    ("1", {}),
-    ("2", {"matches": [Match(wm_class="brave-browser")]}),
-    ("3", {"matches": [Match(wm_class="cursor")]}),
+    ("1", {"label": ""}),
+    ("2", {"label": "", "matches": [Match(wm_class="brave-browser")]}),
+    ("3", {"label": "", "matches": [Match(wm_class="cursor")]}),
     ("4", {}),
     ("5", {}),
     ("6", {}),
     ("7", {}),
     ("8", {}),
-    ("9", {"matches": [Match(wm_class="io.github.celluloid_player.Celluloid")]}),
+    ("9", {"label": "", "matches": [Match(wm_class="io.github.celluloid_player.Celluloid")]}),
 ]
 
 groups = [Group(name, **params) for name, params in group_definitions]

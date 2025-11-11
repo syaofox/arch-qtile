@@ -29,6 +29,7 @@ PACKAGES=(
     # --- 窗口管理器/工具 (适用于 Qtile) ---
     picom              # 合成器 (Compositor)
     xclip              # X 剪贴板命令行工具
+    gpick              # 颜色选择器
     # xwallpaper         # 设置 X 桌面壁纸
     maim               # 截图工具
     rofi               # 应用程序启动器/窗口切换器
