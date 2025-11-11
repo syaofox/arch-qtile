@@ -14,6 +14,9 @@ myTerm = "alacritty"  # My terminal of choice
 
 
 def columns_grow_current(qtile):
+    """
+    # 将当前列宽度增加10像素。
+    """
     layout = qtile.current_layout
     if getattr(layout, "name", "") != "columns":
         return
@@ -30,6 +33,9 @@ def columns_grow_current(qtile):
 
 
 def columns_shrink_current(qtile):
+    """
+    # 将当前列宽度减少10像素。
+    """
     layout = qtile.current_layout
     if getattr(layout, "name", "") != "columns":
         return
@@ -46,6 +52,9 @@ def columns_shrink_current(qtile):
 
 
 def switch_group_cycle(qtile, direction: int):
+    """
+    # 在不同组之间循环切换。
+    """
     groups = [
         group
         for group in qtile.groups
@@ -66,14 +75,23 @@ def switch_group_cycle(qtile, direction: int):
 
 
 def switch_group_next(qtile):
+    """
+    # 切换到下一个组。
+    """
     switch_group_cycle(qtile, direction=1)
 
 
 def switch_group_prev(qtile):
+    """
+    # 切换到上一个组。
+    """
     switch_group_cycle(qtile, direction=-1)
 
 
 def swap_window_with_next(qtile):
+    """
+    # 与下一个窗口对调位置。
+    """
     group = qtile.current_group
     layout = qtile.current_layout
     current = group.current_window if group else None
@@ -278,6 +296,9 @@ def systray_widget():
 
 
 def start_gnome_keyring():
+    """
+    # 启动 gnome-keyring-daemon。
+    """
     keyring_exec = shutil.which("gnome-keyring-daemon")
     if not keyring_exec:
         print("gnome-keyring-daemon 不存在，无法自动启动。")
@@ -305,6 +326,9 @@ def start_gnome_keyring():
 
 
 def ensure_picom_running():
+    """
+    # 启动 picom。
+    """
     try:
         picom_process = subprocess.run(
             ["pgrep", "picom"],
@@ -335,7 +359,10 @@ def ensure_picom_running():
         print(f"启动 picom 失败: {error}")
 
 
-def ensure_fcitx_running():
+def ensure_fcitx_running(): 
+    """
+    # 启动 fcitx5。
+    """
     try:
         process = subprocess.run(
             ["pgrep", "fcitx5"],
@@ -356,6 +383,9 @@ def ensure_fcitx_running():
 
 
 def get_gpu_usage():
+    """
+    # 获取 GPU 使用率。
+    """
     try:
         output = subprocess.check_output(
             [
@@ -372,6 +402,9 @@ def get_gpu_usage():
 
 
 def get_gpu_memory():
+    """
+    # 获取 GPU 内存使用率。
+    """
     try:
         output = subprocess.check_output(
             [
