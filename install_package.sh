@@ -24,7 +24,7 @@ PACKAGES=(
     htop               # 交互式进程查看器
     btop               # 交互式系统监控工具
     timeshift          # 系统快照和恢复工具
-    firefox            # 网页浏览器
+    # firefox            # 网页浏览器
 
     # --- 窗口管理器/工具 (适用于 Qtile) ---
     picom              # 合成器 (Compositor)
@@ -47,8 +47,8 @@ PACKAGES=(
     udisks2            # udisks2 
     tumbler            # 图像查看器插件
     # nemo-media-columns # Nemo 媒体列插件
-    xviewer            # 图像查看器
-    xviewer-plugins    # 图像查看器插件
+    # xviewer            # 图像查看器
+    # xviewer-plugins    # 图像查看器插件
     mpv                # 媒体播放器
     gnome-keyring      # 密钥管理服务
     seahorse           # 密钥和密码管理工具 (GNOME Keyring 的图形化界面)
@@ -58,7 +58,7 @@ PACKAGES=(
     fcitx5-configtool  # Fcitx 5 图形配置工具
     fcitx5-gtk         # GTK 应用程序集成
     fcitx5-qt          # Qt 应用程序集成
-    fcitx5-pinyin      # Fcitx 5 官方拼音输入法引擎
+    fcitx5-chinese-addons      # Fcitx 5 官方拼音输入法引擎
 )
 
 configure_git_identity() {
