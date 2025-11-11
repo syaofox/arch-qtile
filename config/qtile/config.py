@@ -10,7 +10,7 @@ import shutil
 mod = "mod4"
 terminal = guess_terminal()
 
-myTerm = "alacritty"      # My terminal of choice
+myTerm = "alacritty"  # My terminal of choice
 
 
 def columns_grow_current(qtile):
@@ -79,7 +79,12 @@ keys = [
         desc="切换分割和非分割",
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="启动终端"),
-    Key([mod], "w", lazy.spawn("bash -c 'export LANGUAGE=zh_CN.UTF-8 && brave-browser &'"), desc="启动浏览器"),
+    Key(
+        [mod],
+        "w",
+        lazy.spawn("bash -c 'export LANGUAGE=zh_CN.UTF-8 && brave-browser &'"),
+        desc="启动浏览器",
+    ),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="切换布局"),
     Key([mod], "q", lazy.window.kill(), desc="关闭焦点窗口"),
@@ -93,15 +98,14 @@ keys = [
     Key([mod], "e", lazy.spawn("thunar"), desc="打开文件管理器"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="重新加载配置"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="关闭 Qtile"),
-    Key([mod], "Space", lazy.spawn("rofi -show drun -show-icons"), desc='启动启动器'),
+    Key([mod], "Space", lazy.spawn("rofi -show drun -show-icons"), desc="启动启动器"),
     Key(
-        [mod], 
+        [mod],
         "a",
         lazy.spawn('sh -c "maim -s | xclip -selection clipboard -t image/png -i"'),
-        desc="截图"
+        desc="截图",
     ),
     Key([mod], "p", lazy.spawn("sh -c 'gpick -p'"), desc="选择颜色并复制到剪贴板"),
-
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -127,7 +131,13 @@ group_definitions = [
     ("6", {}),
     ("7", {}),
     ("8", {}),
-    ("9", {"label": "", "matches": [Match(wm_class="io.github.celluloid_player.Celluloid")]}),
+    (
+        "9",
+        {
+            "label": "",
+            "matches": [Match(wm_class="io.github.celluloid_player.Celluloid")],
+        },
+    ),
 ]
 
 groups = [Group(name, **params) for name, params in group_definitions]
@@ -151,8 +161,12 @@ for i in groups:
             # ),
             # Or, use below if you prefer not to switch to that group.
             # # mod + shift + group number = move focused window to group
-            Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-                desc="将焦点窗口移动到组 {}".format(i.name)),
+            Key(
+                [mod, "shift"],
+                i.name,
+                lazy.window.togroup(i.name),
+                desc="将焦点窗口移动到组 {}".format(i.name),
+            ),
         ]
     )
 
@@ -166,11 +180,13 @@ colors = [
     ["#7aa2f7", "#7aa2f7"],  # color05   (normal.blue)
     ["#ad8ee6", "#ad8ee6"],  # color06   (normal.magenta)
     ["#0db9d7", "#0db9d7"],  # color15   (bright.cyan)
-    ["#444b6a", "#444b6a"]   # color[9]  (bright.black)
+    ["#444b6a", "#444b6a"],  # color[9]  (bright.black)
 ]
 
+
 # helper in case your colors are ["#hex", "#hex"]
-def C(x): return x[0] if isinstance(x, (list, tuple)) else x
+def C(x):
+    return x[0] if isinstance(x, (list, tuple)) else x
 
 
 def make_sep(padding: int = 8):
@@ -303,11 +319,12 @@ def get_gpu_memory():
     except (FileNotFoundError, subprocess.CalledProcessError, IndexError, ValueError):
         return "VRAM: n/a"
 
+
 layout_theme = {
-    "border_width" : 1,
-    "margin" : 1,
-    "border_focus" : colors[6],
-    "border_normal" : colors[0],
+    "border_width": 1,
+    "margin": 1,
+    "border_focus": colors[6],
+    "border_normal": colors[0],
 }
 
 layouts = [
@@ -340,131 +357,130 @@ extension_defaults = widget_defaults.copy()
 screens = [
     Screen(
         top=bar.Bar(
-            widgets = [
-                widget.Spacer(length = 8),
+            widgets=[
+                widget.Spacer(length=8),
                 widget.Image(
-                    filename = "~/.config/qtile/icons/syaofox.png",
-                    margin = 6,
-                    scale = True,
+                    filename="~/.config/qtile/icons/syaofox.png",
+                    margin=6,
+                    scale=True,
                     # /home/syaofox/.local/bin/rofi-power-menu
                     # /usr/.local/bin/rofi-power-menu
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("rofi -show power-menu -modi 'power-menu:rofi-power-menu'")},
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(
+                            "rofi -show power-menu -modi 'power-menu:rofi-power-menu'"
+                        )
+                    },
                 ),
-                widget.Prompt(
-                    font = "Ubuntu Mono",
-                    fontsize=14,
-                    foreground = colors[1]
-                ),
+                widget.Prompt(font="Ubuntu Mono", fontsize=14, foreground=colors[1]),
                 widget.GroupBox(
-                    fontsize = 16,
-                    margin_y = 5,
-                    margin_x = 5,
-                    padding_y = 0,
-                    padding_x = 2,
-                    borderwidth = 3,
-                    active = colors[8],
-                    inactive = colors[9],
-                    rounded = False,
-                    highlight_color = colors[0],
-                    highlight_method = "line",
-                    this_current_screen_border = colors[7],
-                    this_screen_border = colors [4],
-                    other_current_screen_border = colors[7],
-                    other_screen_border = colors[4],
+                    fontsize=16,
+                    margin_y=5,
+                    margin_x=5,
+                    padding_y=0,
+                    padding_x=2,
+                    borderwidth=3,
+                    active=colors[8],
+                    inactive=colors[9],
+                    rounded=False,
+                    highlight_color=colors[0],
+                    highlight_method="line",
+                    this_current_screen_border=colors[7],
+                    this_screen_border=colors[4],
+                    other_current_screen_border=colors[7],
+                    other_screen_border=colors[4],
                 ),
                 widget.TextBox(
-                    text = '|',
-                    font = "JetBrainsMono Nerd Font Propo Bold",
-                    foreground = colors[9],
-                    padding = 2,
-                    fontsize = 14
+                    text="|",
+                    font="JetBrainsMono Nerd Font Propo Bold",
+                    foreground=colors[9],
+                    padding=2,
+                    fontsize=14,
                 ),
-                widget.CurrentLayout(
-                    foreground = colors[1],
-                    padding = 5
-                ),
+                widget.CurrentLayout(foreground=colors[1], padding=5),
                 widget.TextBox(
-                    text = '|',
-                    font = "JetBrainsMono Nerd Font Propo Bold",
-                    foreground = colors[9],
-                    padding = 2,
-                    fontsize = 14
+                    text="|",
+                    font="JetBrainsMono Nerd Font Propo Bold",
+                    foreground=colors[9],
+                    padding=2,
+                    fontsize=14,
                 ),
-                widget.WindowName(
-                    foreground = colors[6],
-                    padding = 8,
-                    max_chars = 40
-                ),
+                widget.WindowName(foreground=colors[6], padding=8, max_chars=40),
                 # make_sep(),
                 widget.Net(
-                    foreground = colors[5],
-                    padding = 8,
-                    format = 'Net: ↓{down:.1f}{down_suffix}/s ↑{up:.1f}{up_suffix}/s',
-                    update_interval = 1,
-                    use_bits = False,
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e btop')},
+                    foreground=colors[5],
+                    padding=8,
+                    format="Net: ↓{down:.1f}{down_suffix}/s ↑{up:.1f}{up_suffix}/s",
+                    update_interval=1,
+                    use_bits=False,
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(myTerm + " -e btop")
+                    },
                 ),
                 # widget.GenPollText(
                 #     update_interval = 300,
                 #     func = get_kernel_version,
                 #     foreground = colors[3],
-                #     padding = 8, 
+                #     padding = 8,
                 #     fmt = '{}',
                 # ),
                 make_sep(),
                 # uv tool install qtile --with psutil
                 widget.CPU(
-                    foreground = colors[4],
-                    padding = 8, 
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e btop')},
+                    foreground=colors[4],
+                    padding=8,
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(myTerm + " -e btop")
+                    },
                     format="CPU: {load_percent}%",
                 ),
                 make_sep(),
                 widget.Memory(
-                    foreground = colors[8],
-                    padding = 8, 
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e btop')},
-                    measure_mem = 'G',
-                    format = 'Mem: {MemUsed:.2f}{mm}',
-                ),                
-                make_sep(),
-                widget.GenPollText(
-                    update_interval = 5,
-                    func = get_gpu_usage,
-                    foreground = colors[3],
-                    padding = 8,
-                    fmt = '{}',
+                    foreground=colors[8],
+                    padding=8,
+                    mouse_callbacks={
+                        "Button1": lambda: qtile.cmd_spawn(myTerm + " -e btop")
+                    },
+                    measure_mem="G",
+                    format="Mem: {MemUsed:.2f}{mm}",
                 ),
                 make_sep(),
                 widget.GenPollText(
-                    update_interval = 5,
-                    func = get_gpu_memory,
-                    foreground = colors[6],
-                    padding = 8,
-                    fmt = '{}',
+                    update_interval=5,
+                    func=get_gpu_usage,
+                    foreground=colors[3],
+                    padding=8,
+                    fmt="{}",
+                ),
+                make_sep(),
+                widget.GenPollText(
+                    update_interval=5,
+                    func=get_gpu_memory,
+                    foreground=colors[6],
+                    padding=8,
+                    fmt="{}",
                 ),
                 make_sep(),
                 widget.DF(
-                    update_interval = 60,
-                    foreground = colors[5],
-                    padding = 8, 
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-disk')},
-                    partition = '/',
-                    #format = '[{p}] {uf}{m} ({r:.0f}%)',
-                    format = '{uf}{m} free',
-                    fmt = 'Disk: {}',
-                    visible_on_warn = False,
+                    update_interval=60,
+                    foreground=colors[5],
+                    padding=8,
+                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("thunar")},
+                    partition="/",
+                    # format = '[{p}] {uf}{m} ({r:.0f}%)',
+                    format="{uf}{m} free",
+                    fmt="Disk: {}",
+                    visible_on_warn=False,
                 ),
                 make_sep(),
                 widget.DF(
-                    update_interval = 60,
-                    foreground = colors[7],
-                    padding = 8,
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-disk')},
-                    partition = '/mnt/data',
-                    format = '{uf}{m} free',
-                    fmt = 'Data: {}',
-                    visible_on_warn = False,
+                    update_interval=60,
+                    foreground=colors[7],
+                    padding=8,
+                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("thunar")},
+                    partition="/mnt/data",
+                    format="{uf}{m} free",
+                    fmt="Data: {}",
+                    visible_on_warn=False,
                 ),
                 # sep,
                 # widget.Battery(
@@ -477,34 +493,31 @@ screens = [
                 #     discharge_char='',            # Nerd icon; use '-' if you prefer plain ascii
                 #     full_char='✔',                 # when at/near 100%
                 #     unknown_char='?',
-                #     empty_char='!', 
+                #     empty_char='!',
                 #     mouse_callbacks={
                 #         'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e upower -i $(upower -e | grep BAT)'),
                 #     },
                 # ),
                 make_sep(),
                 widget.Volume(
-                    foreground = colors[7],
-                    padding = 8, 
-                    fmt = 'Vol: {}',
+                    foreground=colors[7],
+                    padding=8,
+                    fmt="Vol: {}",
                 ),
                 make_sep(),
                 widget.Clock(
-                    foreground = colors[8],
-                    padding = 8, 
-                    mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-date')},
-                    ## Uncomment for date and time 
-                    format = "%m-%d %H:%M",
-                    ## Uncomment for time only
-                    # format = "%I:%M %p",
+                    foreground=colors[8],
+                    padding=8,
+                    # mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-date')},
+                    format="%m-%d %H:%M",
                 ),
                 systray_widget(),
-                widget.Spacer(length = 8),
+                widget.Spacer(length=8),
             ],
             # 24,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"],  # Borders are magenta
-            margin=[0, 0, 1, 0], 
+            margin=[0, 0, 1, 0],
             size=30,
         ),
         wallpaper="/home/syaofox/.config/walls/eva.jpg",
@@ -514,8 +527,15 @@ screens = [
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Drag(
+        [mod],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
@@ -563,46 +583,48 @@ def autostart():
     os.environ["XMODIFIERS"] = "@im=fcitx"
 
     # 添加 ~/.local/bin 到 PATH
-    os.environ['PATH'] = f"{os.path.expanduser('~')}/.local/bin:{os.environ.get('PATH', '')}"
+    os.environ["PATH"] = (
+        f"{os.path.expanduser('~')}/.local/bin:{os.environ.get('PATH', '')}"
+    )
 
     start_gnome_keyring()
 
-#    # 设置屏幕分辨率
-#    try:
-#        if not os.environ.get("WAYLAND_DISPLAY"):
-#            subprocess.run(
-#                ["xrandr", "-s", "1920x1080", "-r", "60"],
-#                check=True,
-#                timeout=5,
-#            )
-#    except FileNotFoundError:
-#        print("xrandr 不存在，无法设置屏幕分辨率。")
-#    except subprocess.TimeoutExpired:
-#        print("设置屏幕分辨率超时。")
-#    except subprocess.CalledProcessError as error:
-#        print(f"设置屏幕分辨率失败: {error}")
-#
-#    # 启动 gnome-keyring 守护进程，并写入返回的环境变量
-#    try:
-#        keyring_result = subprocess.run(
-#            ["/usr/bin/gnome-keyring-daemon", "--daemonize", "--start"],
-#            check=True,
-#            capture_output=True,
-#            text=True,
-#            timeout=5,
-#        )
-#
-#        for line in keyring_result.stdout.splitlines():
-#            if "=" in line:
-#                key, value = line.strip().split("=", 1)
-#                os.environ[key] = value
-#
-#    except FileNotFoundError:
-#        print("gnome-keyring-daemon 不存在，无法自动启动。")
-#    except subprocess.TimeoutExpired:
-#        print("gnome-keyring-daemon 启动超时。")
-#    except subprocess.CalledProcessError as error:
-#        print(f"gnome-keyring-daemon 启动失败: {error}")
+    #    # 设置屏幕分辨率
+    #    try:
+    #        if not os.environ.get("WAYLAND_DISPLAY"):
+    #            subprocess.run(
+    #                ["xrandr", "-s", "1920x1080", "-r", "60"],
+    #                check=True,
+    #                timeout=5,
+    #            )
+    #    except FileNotFoundError:
+    #        print("xrandr 不存在，无法设置屏幕分辨率。")
+    #    except subprocess.TimeoutExpired:
+    #        print("设置屏幕分辨率超时。")
+    #    except subprocess.CalledProcessError as error:
+    #        print(f"设置屏幕分辨率失败: {error}")
+    #
+    #    # 启动 gnome-keyring 守护进程，并写入返回的环境变量
+    #    try:
+    #        keyring_result = subprocess.run(
+    #            ["/usr/bin/gnome-keyring-daemon", "--daemonize", "--start"],
+    #            check=True,
+    #            capture_output=True,
+    #            text=True,
+    #            timeout=5,
+    #        )
+    #
+    #        for line in keyring_result.stdout.splitlines():
+    #            if "=" in line:
+    #                key, value = line.strip().split("=", 1)
+    #                os.environ[key] = value
+    #
+    #    except FileNotFoundError:
+    #        print("gnome-keyring-daemon 不存在，无法自动启动。")
+    #    except subprocess.TimeoutExpired:
+    #        print("gnome-keyring-daemon 启动超时。")
+    #    except subprocess.CalledProcessError as error:
+    #        print(f"gnome-keyring-daemon 启动失败: {error}")
 
     ensure_fcitx_running()
     ensure_picom_running()
