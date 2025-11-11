@@ -178,6 +178,33 @@ def systray_widget():
     return widget.Spacer(length=0)
 
 
+def start_gnome_keyring():
+    keyring_exec = shutil.which("gnome-keyring-daemon")
+    if not keyring_exec:
+        print("gnome-keyring-daemon 不存在，无法自动启动。")
+        return
+
+    try:
+        keyring_result = subprocess.run(
+            [keyring_exec, "--daemonize", "--start", "--components=pkcs11,secrets,ssh"],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+    except subprocess.TimeoutExpired:
+        print("gnome-keyring-daemon 启动超时。")
+        return
+    except subprocess.CalledProcessError as error:
+        print(f"gnome-keyring-daemon 启动失败: {error}")
+        return
+
+    for line in keyring_result.stdout.splitlines():
+        if "=" in line:
+            key, value = line.strip().split("=", 1)
+            os.environ[key] = value
+
+
 def get_gpu_usage():
     try:
         output = subprocess.check_output(
@@ -470,6 +497,8 @@ def autostart():
     os.environ["GTK_IM_MODULE"] = "fcitx"
     os.environ["QT_IM_MODULE"] = "fcitx"
     os.environ["XMODIFIERS"] = "@im=fcitx"
+
+    start_gnome_keyring()
 
 #    # 设置屏幕分辨率
 #    try:
