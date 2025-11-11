@@ -1,7 +1,7 @@
-from libqtile import bar, extension, hook, layout, qtile, widget
-from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
-from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
+from libqtile import bar, extension, hook, layout, qtile, widget # pyright: ignore[reportMissingImports]
+from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen # pyright: ignore[reportMissingImports]
+from libqtile.lazy import lazy # pyright: ignore[reportMissingImports]
+from libqtile.utils import guess_terminal # pyright: ignore[reportMissingImports]
 import os
 import subprocess
 import shutil
