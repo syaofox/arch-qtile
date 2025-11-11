@@ -205,6 +205,57 @@ def start_gnome_keyring():
             os.environ[key] = value
 
 
+def ensure_picom_running():
+    try:
+        picom_process = subprocess.run(
+            ["pgrep", "picom"],
+            capture_output=True,
+            text=True,
+        )
+    except FileNotFoundError:
+        picom_process = None
+
+    if picom_process and picom_process.stdout:
+        print("picom 已经在运行。")
+        return
+
+    picom_exec = shutil.which("picom")
+    if not picom_exec:
+        print("picom 不存在，无法自动启动。")
+        return
+
+    picom_config = os.path.expanduser("~/.config/picom/picom.conf")
+    picom_cmd = [picom_exec]
+    if os.path.isfile(picom_config):
+        picom_cmd.extend(["--config", picom_config])
+
+    try:
+        subprocess.Popen(picom_cmd)
+        print(f"已启动 picom: {' '.join(picom_cmd)}")
+    except OSError as error:
+        print(f"启动 picom 失败: {error}")
+
+
+def ensure_fcitx_running():
+    try:
+        process = subprocess.run(
+            ["pgrep", "fcitx5"],
+            capture_output=True,
+            text=True,
+        )
+    except FileNotFoundError:
+        process = None
+
+    if process and process.stdout:
+        print("fcitx5 已经在运行。")
+        return
+
+    try:
+        subprocess.Popen(["fcitx5", "-d"])
+    except OSError as error:
+        print(f"启动 fcitx5 失败: {error}")
+
+
 def get_gpu_usage():
     try:
         output = subprocess.check_output(
@@ -280,7 +331,6 @@ screens = [
                 widget.Spacer(length = 8),
                 widget.Image(
                     filename = "~/.config/qtile/icons/syaofox.png",
-                    # filename = "~/.config/qtile/icons/debian.png",
                     margin = 6,
                     scale = True,
                     # /home/syaofox/.local/bin/rofi-power-menu
@@ -537,53 +587,5 @@ def autostart():
 #    except subprocess.CalledProcessError as error:
 #        print(f"gnome-keyring-daemon 启动失败: {error}")
 
-    # 检查 fcitx5 是否已经在运行（防止重复启动）
-    try:
-        # 查找现有的 fcitx5 进程
-        process = subprocess.run(
-            ["pgrep", "fcitx5"],
-            capture_output=True,
-            text=True
-        )
-
-    except FileNotFoundError:
-        # pgrep 命令可能不存在，直接尝试启动
-        process = None
-
-    if process and process.stdout:
-        print("fcitx5 已经在运行。")
-    else:
-        # 启动 fcitx5 守护进程
-        # 使用 subprocess.Popen 以非阻塞方式启动，不影响 Qtile 启动速度
-        subprocess.Popen(["fcitx5", "-d"])
-
-    # 确保 picom 合成器运行
-    try:
-        picom_process = subprocess.run(
-            ["pgrep", "picom"],
-            capture_output=True,
-            text=True
-        )
-
-    except FileNotFoundError:
-        # pgrep 不存在，直接尝试启动 picom
-        picom_process = None
-
-    if picom_process and picom_process.stdout:
-        print("picom 已经在运行。")
-    else:
-        picom_exec = shutil.which("picom")
-        if not picom_exec:
-            print("picom 不存在，无法自动启动。")
-            return
-
-        picom_config = os.path.expanduser("~/.config/picom/picom.conf")
-        picom_cmd = [picom_exec]
-        if os.path.isfile(picom_config):
-            picom_cmd.extend(["--config", picom_config])
-
-        try:
-            subprocess.Popen(picom_cmd)
-            print(f"已启动 picom: {' '.join(picom_cmd)}")
-        except OSError as error:
-            print(f"启动 picom 失败: {error}")
+    ensure_fcitx_running()
+    ensure_picom_running()

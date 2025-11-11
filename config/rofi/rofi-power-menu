@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+entries="Suspend
+Lock
+Logout
+Reboot
+Shutdown"
+
+retv="${ROFI_RETV:-0}"
+
+if [ "$retv" -eq 0 ]; then
+    printf "%s\n" "$entries"
+    exit 0
+fi
+
+choice="${1:-}"
+
+case "$choice" in
+    Suspend)
+        systemctl suspend
+        ;;
+    Lock)
+        if command -v loginctl >/dev/null 2>&1; then
+            loginctl lock-session
+        elif command -v dm-tool >/dev/null 2>&1; then
+            dm-tool lock
+        else
+            echo "Lock command not found." >&2
+            exit 1
+        fi
+        ;;
+    Logout)
+        if command -v qtile >/dev/null 2>&1; then
+            qtile cmd-obj -o cmd -f shutdown
+        else
+            pkill -KILL -u "$USER"
+        fi
+        ;;
+    Reboot)
+        systemctl reboot
+        ;;
+    Shutdown)
+        systemctl poweroff
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+
