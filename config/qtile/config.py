@@ -79,8 +79,7 @@ keys = [
         desc="切换分割和非分割",
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="启动终端"),
-    # 启动火狐
-    Key([mod], "w", lazy.spawn("firefox"), desc="启动火狐"),
+    Key([mod], "w", lazy.spawn("bash -c 'export LANGUAGE=zh_CN.UTF-8 && brave-browser &'"), desc="启动浏览器"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="切换布局"),
     Key([mod], "q", lazy.window.kill(), desc="关闭焦点窗口"),
@@ -117,7 +116,19 @@ for vt in range(1, 8):
     )
 
 
-groups = [Group(i) for i in "123456789"]
+group_definitions = [
+    ("1", {}),
+    ("2", {"matches": [Match(wm_class="brave-browser")]}),
+    ("3", {"matches": [Match(wm_class="cursor")]}),
+    ("4", {}),
+    ("5", {}),
+    ("6", {}),
+    ("7", {}),
+    ("8", {}),
+    ("9", {"matches": [Match(wm_class="io.github.celluloid_player.Celluloid")]}),
+]
+
+groups = [Group(name, **params) for name, params in group_definitions]
 
 for i in groups:
     keys.extend(
