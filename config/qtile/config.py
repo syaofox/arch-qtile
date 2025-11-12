@@ -211,9 +211,9 @@ for vt in range(1, 8):
 
 
 group_definitions = [
-    ("1", {"label": ""}),
-    ("2", {"label": "", "matches": [Match(wm_class="brave-browser")]}),
-    ("3", {"label": "", "matches": [Match(wm_class="cursor")]}),
+    ("1", {"label": "", "matches": [Match(wm_class="brave-browser")]}),
+    ("2", {"label": "", "matches": [Match(wm_class="cursor")]}),
+    ("3", {}), 
     ("4", {}),
     ("5", {}),
     ("6", {}),
@@ -654,6 +654,7 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
         Match(wm_class="io.github.celluloid_player.Celluloid"),  # Celluloid player
+        Match(wm_class="xviewer"),  # xviewer
     ]
 )
 auto_fullscreen = True
