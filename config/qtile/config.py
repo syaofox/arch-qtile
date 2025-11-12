@@ -512,6 +512,7 @@ screens = [
                 # make_sep(),
                 # uv tool install qtile --with psutil
                 widget.CPU(
+                    update_interval=5,
                     foreground=colors[4],
                     padding=8,
                     mouse_callbacks={
@@ -521,6 +522,7 @@ screens = [
                 ),
                 make_sep(),
                 widget.Memory(
+                    update_interval=5,
                     foreground=colors[8],
                     padding=8,
                     mouse_callbacks={
